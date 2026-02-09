@@ -1,0 +1,16 @@
+web/config/database.php
+detectors/config.py
+*.log
+error_log
+*.tmp
+*.swp
+*~
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.sublime-*
+*.bak
+*.backup

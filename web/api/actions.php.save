@@ -1,0 +1,117 @@
+ing Attempt'
+        ];
+  
+        // Niveles de severidad
+        $severityLevels = ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+        
+        // Generar datos aleatorios del ataque
+        $attackType = $attackTypes[array_rand($attackTypes)];
+        $sourceIP = long2ip(rand(0, 4294967295))
+        $severity = $severityLevels[array_rand($severityLevels)];
+        
+        // Query con prepared statement (seguridad contra SQL injection)
+        $sql = "
+            INSERT INTO [SENSOR_REMOTO].[SensorDB].[dbo].[Live_Alerts] 
+            (TipoAtaque, IP_Origen, Severidad, Timest            VALUES (?, ?, ?, GETDATE())
+        ";
+        
+       $stmt = $db->prepare($sql);
+        $result = $stmt->execute([$attackType, $sourceIP, $severity]);
+        
+       if ($result) {
+            $response["success"] = true;
+            $response["message"] = "Ataque simulado exitosamente en nodo Windows";
+            $response["data"] = [
+                "attack_type" => $attackType,
+                "source_ip" => $sourceIP,
+                "severity" => $severity,
+                "target_node" => "SENSOR_REMOTO (Windows)"
+            ];
+      http_response_code(201);
+        } else {
+            throw new Exception("Error al insertar ataque simulado");
+        
+    }
+    
+    // =================================================================
+    // ACCIÓN: ARCHIVE - Transacción distribuida (Copiar y eliminar)
+    // Implementa: 
+    // - Transacciones distribuidas
+    // - Replicación de datos
+    // - Control de concurrencia
+    // - Manejo de falollback automático)
+    // =================================================================
+    elseif ($action === 'archive') {
+        // Verificar si hay atos para archivar
+        $checkSql = "SELECT COUNT(*) as total FROM [SENSOR_REMOTO].[SensorDB].[dbo].[Live_Alerts]";
+        $checkStmt = $db->query($checkSql);
+        $count = $checkStmt->fetch(PDO::FETCH_ASSOC)['total'];
+        
+        if ($count == 0) {
+            $response["succes"] = true;
+            $response["message"] = "No hay alertas para archivar";
+            $response["data"] = ["archived_count" => 0];
+            http_response_code;
+        } else {
+            // INICIAR TRANSACCIÓN DISTRIBUIDA
+            $db->beginTransaction()
+            
+            try {
+                // FASE 1: PREPARACIÓN - Copiar datos del nodo remoto al local
+                // Implementa: Replicación de datos
+                $sqlCopy = "INSERT INTO Forense_Logs (Original_AlertID, TipoAtaque, IP_Origen)
+            SELECT AlertID, TipoAtaque, IP_Origen 
+            FROM [SENSOR_REMOTO].[SensorDB].[dbo].[Live_Alerts]";
+                
+                $copyStmt = $db->exec($sqlCopy);            
+                // FASE 2: COMMIT - Eliminar datos del nodo remoto
+                // Solo si la copia fue exitosa (control de concurrencia)
+               $sqlDelete = "
+                    DELETE FROM [SENSOR_REMOTO].[SensorDB].[dbo].[Live_Alerts]
+                ";
+               
+                $deleteStmt = $db->exec($sqlDelete);
+                
+                // COMMIT de la transacción
+                $db->commit();
+                
+               $response["success"] = true;
+                $response["message"] = "Logs archivados exitosamente en Fedora Vault";
+                $response["data"] = [
+             "archived_count" => $count,
+                    "source_node" => "SENSOR_REMOTO (Windows)",
+                    "destination_node" => "Forense_Logs (Fedora)",
+                    "operation" => "Distributed Transaction Completed"
+                ];
+                http_response_code(200);
+                     } catch (Exception $e) {
+                // ROLLBACK en caso de error
+                // Garantiza consistencia de datos (ACID)
+               if ($db->inTransaction()) {
+                    $db->rollBack();
+                }
+                      throw new Exception("Error en transacción distribuida: " . $e->getMessage());
+            }
+        }
+
+    
+    // =================================================================
+    // ACCIÓN: CLEANUP - Lar logs antiguos (mantenimiento)
+    // Implementa: Procesamiento distribuido de limpieza
+    // =================================================================
+    elseif ($action === 'clean
+        $deletedRows = $db->exec($sqlCleanup);
+        
+        $response["success"] = true;
+        $response["message"] = "Limpieza de logs antiguos completada";
+        $response["data"] = [
+            "deleted_count" => $deletedRows,
+            "retention_days" => 30
+        ];
+        http_response_code(200);
+    }
+    
+    // Acción no reconocida
+    else {
+        http_response_code(400);
+        $response["error"] = "Acc

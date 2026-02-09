@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema SIEM de Monitoreo de Seguridad con Base de Datos Distribuida">
+    <meta name="author" content="Proyecto Bases de Datos Distribuidas">
+    <title>SIEM Distribuido - Dashboard de Seguridad</title>
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="assets/style.css">
+    
+    <!-- Favicons (opcional) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+    <!-- Contenedor Principal -->
+    <div class="container">
+        
+        <!-- Header -->
+        <header>
+            <div>
+                <h1>🛡️ SIEM MONITORING SYSTEM</h1>
+                <p style="color: #8b949e; font-size: 0.9em; margin-top: 5px;">
+                    Sistema de Gestión de Eventos e Información de Seguridad
+                </p>
+            </div>
+            <div class="status">
+                Estado Nodo Remoto: <span id="status-icon">🟢 Online</span>
+            </div>
+        </header>
+        
+        <!-- Panel de Controles -->
+        <section class="controls">
+            <button onclick="triggerAction('simulate')" class="btn-danger" title="Simula un ataque en el nodo Windows">
+                ⚠️ Simular Ataque (En Windows)
+            </button>
+            <button onclick="triggerAction('archive')" class="btn-primary" title="Archiva logs del Windows al Fedora">
+                🔒 Archivar Logs (A Fedora)
+            </button>
+            <button onclick="triggerAction('cleanup')" class="btn-secondary" title="Limpia logs antiguos (>30 días)">
+                🧹 Limpiar Logs Antiguos
+            </button>
+            <button onclick="loadData()" class="btn-secondary" id="refresh-btn" title="Actualizar datos manualmente">
+                🔄 Actualizar
+            </button>
+        </section>
+        
+        <!-- Grid de Tarjetas (Nodos Distribuidos) -->
+        <main class="grid-layout">
+            
+            <!-- Tarjeta 1: Nodo Remoto (Windows) -->
+            <section class="card remote">
+                <h2>📡 Alertas en Tiempo Real (Sensor Windows)</h2>
+                <p style="color: #8b949e; font-size: 0.9em; margin-bottom: 10px;">
+                    Servidor: <code>SENSOR_REMOTO</code> | Base de Datos: <code>SensorDB</code>
+                </p>
+                
+                <div class="table-container">
+                    <table id="live-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo de Ataque</th>
+                                <th>IP Origen</th>
+                                <th>Severidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="loading-row">
+                                <td colspan="4">
+                                    <span class="loading-spinner">⏳</span> Cargando...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- Tarjeta 2: Nodo Local (Fedora) -->
+            <section class="card local">
+                <h2>💾 Evidencia Forense (Vault Fedora)</h2>
+                <p style="color: #8b949e; font-size: 0.9em; margin-bottom: 10px;">
+                    Servidor: <code>LOCAL</code> | Base de Datos: <code>CentralSIEM</code>
+                </p>
+                
+                <div class="table-container">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Log ID</th>
+                                <th>Tipo de Ataque</th>
+                                <th>IP Origen</th>
+                                <th>Fecha Archivado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="loading-row">
+                                <td colspan="4">
+                                    <span class="loading-spinner">⏳</span> Cargando...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+        </main>
+        
+        <!-- Footer con información -->
+        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #8b949e; border-top: 1px solid #30363d;">
+            <p>
+                <strong>Proyecto de Bases de Datos Distribuidas</strong><br>
+                Sistema SIEM con arquitectura heterogénea (SQL Server)<br>
+                Implementa: Consultas distribuidas, transacciones 2PC, replicación, fragmentación
+            </p>
+            <p style="margin-top: 10px; font-size: 0.85em;">
+                🔹 Actualización automática cada 5 segundos<br>
+                🔹 Arquitectura Cliente-Servidor con APIs REST
+            </p>
+        </footer>
+        
+    </div>
+    
+    <!-- Scripts -->
+    <script src="assets/main.js"></script>
+    
+</body>
+</html>
