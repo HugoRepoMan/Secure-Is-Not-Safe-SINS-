@@ -211,11 +211,11 @@ Ver [docs/DEMO.md](docs/DEMO.md) para el script completo de presentación.
 
 ## 📄 Licencia
 
-Proyecto académico - Universidad [Tu Universidad]  
+Proyecto académico - Universidad De las fuerzas Armadas ESPE
 Bases de Datos Distribuidas - Febrero 2026
 
 ## 🙏 Agradecimientos
 
-- Profesor: [Nombre del Ingeniero]
+- Profesor: Inge. Kevin Jair Chucquitarco Velasco
 - Curso: Bases de Datos Distribuidas
 - Tecnologías: Microsoft SQL Server, Apache, PHP, Python
