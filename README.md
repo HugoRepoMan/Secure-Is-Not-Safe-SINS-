@@ -19,9 +19,9 @@ Demostrar conceptos avanzados de bases de datos distribuidas mediante un sistema
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    SISTEMA SIEM DISTRIBUIDO                  │
+│                    SISTEMA SIEM DISTRIBUIDO                 │
 ├─────────────────────────────────────────────────────────────┤
-│                                                               │
+│                                                             │
 │  ┌──────────────┐           ┌──────────────┐                │
 │  │ NODO FEDORA  │◄─────────►│ NODO WINDOWS │                │
 │  │  (Master)    │  Linked   │  (Sensor)    │                │
@@ -29,19 +29,19 @@ Demostrar conceptos avanzados de bases de datos distribuidas mediante un sistema
 │  │ SQL Server   │           │ SQL Server   │                │
 │  │ Puerto 1432  │           │  Simulado    │                │
 │  └──────┬───────┘           └──────┬───────┘                │
-│         │                          │                         │
+│         │                          │                        │
 │  ┌──────▼───────┐           ┌──────▼───────┐                │
 │  │ Forense_Logs │           │ Live_Alerts  │                │
 │  │ (Archivo)    │           │ (Tiempo Real)│                │
 │  └──────────────┘           └──────────────┘                │
-│         ▲                          │                         │
-│         │                          │                         │
+│         ▲                          │                        │
+│         │                          │                        │
 │         │     ┌────────────────────▼──────┐                 │
 │         │     │   Dashboard Web (PHP)     │                 │
-│         └─────┤   - Visualización          │                 │
-│               │   - Control de acciones    │                 │
-│               └────────────────────────────┘                 │
-│                          │                                    │
+│         └─────┤   - Visualización          │                │
+│               │   - Control de acciones    │                │
+│               └────────────────────────────┘                │
+│                          │                                  │
 │  ┌───────────────────────▼──────────────────────┐           │
 │  │        DETECTORES DE ATAQUES REALES          │           │
 │  ├──────────────────────────────────────────────┤           │
@@ -50,7 +50,7 @@ Demostrar conceptos avanzados de bases de datos distribuidas mediante un sistema
 │  │ • Honeypot Multi-servicio                    │           │
 │  │ • Attack Generator (Demo)                    │           │
 │  └──────────────────────────────────────────────┘           │
-│                                                               │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
