@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIEM Distribuido - Dashboard</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ SIEM MONITORING SYSTEM</h1>
+            <div class="status">Estado Nodo Remoto: <span id="status-icon">🟢 Online</span></div>
+        </header>
+
+        <div class="controls">
+            <button onclick="triggerAction('simulate')" class="btn-danger">⚠️ Simular Ataque (En Windows)</button>
+            <button onclick="triggerAction('archive')" class="btn-primary">🔒 Archivar Logs (A Fedora)</button>
+        </div>
+
+        <!-- NUEVO: Sección de Filtros -->
+        <section class="filters-section">
+            <h3>🔍 Filtrar Alertas por Tipo de Ataque</h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterByType('all')">
+                    📊 Todos (<span id="count-all">0</span>)
+                </button>
+                <button class="filter-btn" onclick="filterByType('Port Scanning')">
+                    🔍 Port Scanning (<span id="count-port">0</span>)
+                </button>
+                <button class="filter-btn" onclick="filterByType('SYN Flood')">
+                    💥 SYN Flood (<span id="count-syn">0</span>)
+                </button>
+                <button class="filter-btn" onclick="filterByType('ICMP Flood')">
+                    📡 ICMP Flood (<span id="count-icmp">0</span>)
+                </button>
+                <button class="filter-btn" onclick="filterByType('SQL Injection')">
+                    💉 SQL Injection (<span id="count-sql">0</span>)
+                </button>
+                <button class="filter-btn" onclick="filterByType('XSS')">
+                    🔗 XSS (<span id="count-xss">0</span>)
+                </button>
+                <button class="filter-btn" onclick="filterByType('SSH Brute Force')">
+                    🔐 SSH Brute Force (<span id="count-ssh">0</span>)
+                </button>
+                <button class="filter-btn" onclick="filterByType('Honeypot')">
+                    🍯 Honeypot (<span id="count-honeypot">0</span>)
+                </button>
+            </div>
+
+            <!-- Barra de búsqueda adicional -->
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="🔎 Buscar por IP origen..." 
+                       onkeyup="searchByIP()">
+                <button class="btn-clear" onclick="clearFilters()">✖ Limpiar Filtros</button>
+            </div>
+        </section>
+
+        <!-- NUEVO: Estadísticas rápidas -->
+        <section class="stats-section">
+            <div class="stat-card critical">
+                <div class="stat-number" id="critical-count">0</div>
+                <div class="stat-label">🔴 Críticos</div>
+            </div>
+            <div class="stat-card high">
+                <div class="stat-number" id="high-count">0</div>
+                <div class="stat-label">🟠 Altos</div>
+            </div>
+            <div class="stat-card medium">
+                <div class="stat-number" id="medium-count">0</div>
+                <div class="stat-label">🟡 Medios</div>
+            </div>
+            <div class="stat-card low">
+                <div class="stat-number" id="low-count">0</div>
+                <div class="stat-label">🟢 Bajos</div>
+            </div>
+        </section>
+
+        <main class="grid-layout">
+            <section class="card remote">
+                <div class="card-header">
+                    <h2>📡 Alertas en Tiempo Real (Sensor Windows)</h2>
+                    <span class="badge" id="live-badge">0 alertas</span>
+                </div>
+                <div class="table-container">
+                    <table id="live-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo de Ataque</th>
+                                <th>IP Origen</th>
+                                <th>Severidad</th>
+                                <th>Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card local">
+                <div class="card-header">
+                    <h2>💾 Evidencia Forense (Vault Fedora)</h2>
+                    <span class="badge" id="archive-badge">0 archivados</span>
+                </div>
+                <div class="table-container">
+                    <table id="history-table">
+                        <thead>
+                            <tr>
+                                <th>Log ID</th>
+                                <th>Tipo</th>
+                                <th>Origen</th>
+                                <th>Fecha Archivo</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="assets/main.js"></script>
+</body>
+</html>

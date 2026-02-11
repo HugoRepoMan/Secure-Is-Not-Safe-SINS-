@@ -1,0 +1,73 @@
+{
+  "targets": {
+    "default": "127.0.0.1",
+    "description": "IP objetivo para los ataques (usar localhost para demo segura)"
+  },
+  
+  "attack_settings": {
+    "port_scan": {
+      "enabled": true,
+      "ports_file": "wordlists/common_ports.txt",
+      "scan_delay": 0.1,
+      "randomize": true
+    },
+    
+    "syn_flood": {
+      "enabled": true,
+      "duration": 5,
+      "target_port": 80,
+      "packets_per_second": 100,
+      "spoof_source": true
+    },
+    
+    "icmp_flood": {
+      "enabled": true,
+      "duration": 5,
+      "packets_per_second": 50,
+      "payload_size": 64
+    },
+    
+    "sql_injection": {
+      "enabled": true,
+      "payloads_file": "wordlists/sql_injection.txt",
+      "target_url": "http://127.0.0.1:8080",
+      "delay_between_requests": 0.5
+    },
+    
+    "xss_attack": {
+      "enabled": true,
+      "payloads_file": "wordlists/xss_payloads.txt",
+      "target_url": "http://127.0.0.1:8080",
+      "delay_between_requests": 0.5
+    },
+    
+    "ssh_brute_force": {
+      "enabled": true,
+      "usernames_file": "wordlists/usernames.txt",
+      "passwords_file": "wordlists/passwords.txt",
+      "target_port": 22,
+      "max_attempts": 50,
+      "delay_between_attempts": 0.3
+    },
+    
+    "honeypot_trigger": {
+      "enabled": true,
+      "ports": [2222, 8080, 3306, 5432, 1433, 21],
+      "delay_between_connections": 1
+    }
+  },
+  
+  "logging": {
+    "enabled": true,
+    "log_file": "attack_generator.log",
+    "log_level": "INFO",
+    "save_results": true,
+    "results_file": "attack_results.json"
+  },
+  
+  "safety": {
+    "require_confirmation": true,
+    "max_attack_duration": 300,
+    "localhost_only_warning": true
+  }
+}

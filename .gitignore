@@ -1,0 +1,30 @@
+# Archivos con credenciales sensibles
+dashboard/config/database.php
+config.py
+
+# Logs y archivos temporales
+*.log
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# Resultados de ataques (pueden contener IPs reales)
+scripts/attack_generator.log
+scripts/attack_results.json
+
+# Archivos de testing
+test_*.php
+test_*.py
+
+# Archivos específicos del usuario
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backups
+*.bak
+*.backup
+*.old

