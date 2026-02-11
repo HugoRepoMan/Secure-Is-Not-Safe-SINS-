@@ -326,7 +326,7 @@ Este es un proyecto académico. Si encuentras mejoras o bugs:
 - **Shadya Reyes** - Colaboración
 
 **Institución**: Universidad de las Fuerzas Armadas ESPE sede Santo Domingo   
-**Curso**: Bases de Datos Distribuidas  
+**Curso**: Gestion de Base de Datos  
 **Profesor**: Ing. Kevin Chuquitarco
 **Fecha**: Febrero 2026
 
